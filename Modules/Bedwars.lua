@@ -845,5 +845,7 @@ runcode(function()
     })
 end)
 
-library:LoadConfiguration()
+if not shared["HamWareExternal"] then
+    library:LoadConfiguration()
+end
 shared["HamWare"] = HamWare
