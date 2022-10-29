@@ -32,8 +32,13 @@ HamWare["Sections"] = {
     ["World"] = HamWare["Tabs"]["World"]:CreateSection("World"),
     ["Exploits"] = HamWare["Tabs"]["Exploits"]:CreateSection("Exploits")
 }
+local LastNotification = 0
 function createnotification(Title2,Content2)
-    library:Notify(Title2,Content2,10010348543)
+    local diff = math.abs(LastNotification - tick())
+    if diff >= 0.3 then
+        library:Notify(Title2,Content2,10010348543)
+        LastNotification = tick()
+    end
 end
 function runcode(func)
     func()
@@ -48,11 +53,19 @@ local NewFunc = {}; NewFunc["NewElement"] = function(argtable)
         Callback = function(Val)
             toggled = Val
             if toggled then
-                createnotification("Module Toggled",argtable["Name"].." has been Enabled!")
-                argtable["Callback"](true)
+                spawn(function()
+                    createnotification("Module Toggled",argtable["Name"].." has been Enabled!")
+                end)
+                spawn(function()
+                    argtable["Callback"](true)
+                end)
             else
-                createnotification("Module Toggled",argtable["Name"].." has been Disabled!")
-                argtable["Callback"](false)
+                spawn(function()
+                    createnotification("Module Toggled",argtable["Name"].." has been Disabled!")
+                end)
+                spawn(function()
+                    argtable["Callback"](false)
+                end)
             end
         end
     })
@@ -285,14 +298,14 @@ runcode(function()
                 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
                     if v:IsInGroup(5774246) and v:GetRankInGroup(5774246) >= 100 then
                         Client:Get("TeleportToLobby"):SendToServer()
-                    elseif v:IsInGroup(4199740) and v:GetRankInGroup(4199740) >= 1 then
+                    elseif v:IsInGroup(5774246,4199740) and v:GetRankInGroup(5774246,4199740) >= 1 then
                         Client:Get("TeleportToLobby"):SendToServer()
                     end
                 end
                 connection = game:GetService("Players").PlayerAdded:Connect(function(v)
                     if v:IsInGroup(5774246) and v:GetRankInGroup(5774246) >= 100 then
                         Client:Get("TeleportToLobby"):SendToServer()
-                    elseif v:IsInGroup(4199740) and v:GetRankInGroup(4199740) >= 1 then
+                    elseif v:IsInGroup(5774246,4199740) and v:GetRankInGroup(5774246,4199740) >= 1 then
                         Client:Get("TeleportToLobby"):SendToServer()
                     end
                 end)
@@ -418,6 +431,11 @@ runcode(function()
                 end)
             else
                 velo:Destroy()
+                for i,v in pairs(lplr.Character:FindFirstChild("HumanoidRootPart"):GetChildren()) do
+                    if v:IsA("BodyVelocity") then
+                        v:Destroy()
+                    end
+                end
             end
         end
     })
