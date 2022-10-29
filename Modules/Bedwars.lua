@@ -32,6 +32,7 @@ HamWare["Sections"] = {
     ["World"] = HamWare["Tabs"]["World"]:CreateSection("World"),
     ["Exploits"] = HamWare["Tabs"]["Exploits"]:CreateSection("Exploits")
 }
+HamWare["Library"] = library
 local LastNotification = 0
 function createnotification(Title2,Content2)
     local diff = math.abs(LastNotification - tick())
@@ -109,6 +110,8 @@ local NewFunc = {}; NewFunc["NewElement"] = function(argtable)
     end
     return addfuncs
 end
+HamWare["Createnotification"] = Createnotification
+HamWare["NewElement"] = NewElement
 
 local lplr = game:GetService("Players").LocalPlayer
 local cam = game:GetService("Workspace").CurrentCamera
