@@ -285,14 +285,14 @@ runcode(function()
                 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
                     if v:IsInGroup(5774246) and v:GetRankInGroup(5774246) >= 100 then
                         Client:Get("TeleportToLobby"):SendToServer()
-                    elseif v:IsInGroup(5774246,4199740) and v:GetRankInGroup(5774246,4199740) >= 1 then
+                    elseif v:IsInGroup(4199740) and v:GetRankInGroup(4199740) >= 1 then
                         Client:Get("TeleportToLobby"):SendToServer()
                     end
                 end
                 connection = game:GetService("Players").PlayerAdded:Connect(function(v)
                     if v:IsInGroup(5774246) and v:GetRankInGroup(5774246) >= 100 then
                         Client:Get("TeleportToLobby"):SendToServer()
-                    elseif v:IsInGroup(5774246,4199740) and v:GetRankInGroup(5774246,4199740) >= 1 then
+                    elseif v:IsInGroup(4199740) and v:GetRankInGroup(4199740) >= 1 then
                         Client:Get("TeleportToLobby"):SendToServer()
                     end
                 end)
