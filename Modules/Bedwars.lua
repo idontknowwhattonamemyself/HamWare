@@ -108,6 +108,9 @@ local NewFunc = {}; NewFunc["NewElement"] = function(argtable)
             Callback = argtable2["Callback"]
         })
     end
+    function addfuncs:Toggle()
+        toggle:Set(not Toggled)
+    end
     return addfuncs
 end
 HamWare["Createnotification"] = Createnotification
